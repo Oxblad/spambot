@@ -6,8 +6,9 @@ from telebot import TeleBot
 import random, datetime, time
 from datetime import datetime, timedelta
 from random import choice
+import os
 
-TOKEN = '1090200914:AAFUPmgNU596Rv6ki_nRh-uICCk3xbgUfxA'
+TOKEN = os.environ.get('BOT_TOKEN')
 
 THREADS_LIMIT = 10
 
