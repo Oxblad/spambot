@@ -9,14 +9,14 @@ import time
 import random
 import os
 
-token = os.environ.get('BOT_TOKEN')
+TOKEN = os.environ.get('BOT_TOKEN')
 THREADS_LIMIT = 400
 
 chat_ids_file = 'chat_ids.txt'
 
 ADMIN_CHAT_ID = 947353888
 owner = 947353888
-TOKEN = '1090200914:AAFUPmgNU596Rv6ki_nRh-uICCk3xbgUfxA'
+
 
 users_amount = [0]
 threads = list()
