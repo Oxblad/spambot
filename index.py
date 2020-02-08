@@ -7,9 +7,9 @@ from telebot import TeleBot
 import telebot
 import time
 import random
+import os
 
-TOKEN = '1029502739:AAGLuLgiRv53SBIEDumXATFcD7ctC-ZvVmc'
-
+token = os.environ.get('BOT_TOKEN')
 THREADS_LIMIT = 400
 
 chat_ids_file = 'chat_ids.txt'
