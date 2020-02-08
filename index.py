@@ -685,7 +685,7 @@ def start_spam(chat_id, phone_number, force):
         # bot.send_message(ADMIN_CHAT_ID, f"{message.chat.first_name} {message.chat.last_name} отправил спам на {phone_number}", parse_mode='HTML')
 
     bot.send_message(chat_id, msg)
-    end = datetime.now() + timedelta(minutes=10)
+    end = datetime.now() + timedelta(minutes=5)
     while (datetime.now() < end) or (force and chat_id == ADMIN_CHAT_ID):
         if chat_id not in running_spams_per_chat_id:
             break
@@ -718,7 +718,7 @@ def handle_message_received(message):
     chat_id = int(message.chat.id)
     text = message.text
 
-    if text == '️Информация':
+    if text == 'Информация':
         bot.send_message(chat_id,
                          '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem2424',
                          parse_mode='HTML')
