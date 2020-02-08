@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#1.2 fix usbag
 import requests
 import threading
 from datetime import datetime, timedelta
