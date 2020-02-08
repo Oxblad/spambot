@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+#1.4 fix bag, add proxy
 import requests
 import threading
 from datetime import datetime, timedelta
