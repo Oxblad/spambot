@@ -12,8 +12,8 @@ TOKEN = '1029502739:AAGLuLgiRv53SBIEDumXATFcD7ctC-ZvVmc'
 THREADS_LIMIT = 400
 
 chat_ids_file = 'chat_ids.txt'
-owner = 947353888
-ADMIN_CHAT_ID = 947353888
+owner = 1
+ADMIN_CHAT_ID = 1
 TOKEN = '1090200914:AAFUPmgNU596Rv6ki_nRh-uICCk3xbgUfxA'
 
 users_amount = [0]
@@ -745,7 +745,7 @@ def handle_message_received(message):
             bot.send_message(chat_id, 'Вы еще не начинали спам')
         else:
             running_spams_per_chat_id.remove(chat_id)
-            bot.send_message(chat_id, 'Спам на номер завершен, так как он был отклонён!')
+            bot.send_message(chat_id, 'Спам на номер завершен!')
 
     elif text == 'Помощь':
         bot.send_message(chat_id,
