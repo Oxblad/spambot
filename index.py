@@ -8,6 +8,7 @@ import time
 import random
 import threading
 from random import choice
+import os
 proxies = {
     'http': '193.136.119.21:80',
     'http': '46.45.129.16:80',
