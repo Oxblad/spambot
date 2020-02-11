@@ -568,7 +568,7 @@ def send_for_number(phone):
 def start_spam(chat_id, phone_number, force):
     running_spams_per_chat_id.append(chat_id)
 
-    msg = f'‍Номер телефона: {phone_number}\nТаймер: 5 минут\nСпам успешно начался!'
+    msg = f'Спам на номер {phone_number} запущен!'
 
     bot.send_message(chat_id, msg)
     end = datetime.now() + timedelta(minutes = 5)
