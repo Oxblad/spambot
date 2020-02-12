@@ -642,24 +642,19 @@ def handle_message_received(message):
         send_message_users(msg)
 
     elif let == 1:
+
         print('Start')
-        i = 0
-        d = 0
-        sum = ''
-        q = 0
-        c = 0
-        numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-        listing = list(text)
-        lenn = len(text)
-        while i < lenn:
-            a = listing[i]
-            try:
-                int(str)
-                i += 1
-                spam_handler(phone, chat_id, force=False)
-            except ValueError:
-                return False
-                bot.send_message(chat_id, 'Ошибка. Номер не был правильно введен!')
+        def is_int(str):
+            i = 0
+            lenn = len(text)
+            while i < lenn:
+                a = listing[i]
+                try:
+                    int(str)
+                    return True
+                except ValueError:
+                    return False
+                    bot.send_message(chat_id, 'Ошибка')
 
 
             print(is_int(a))
