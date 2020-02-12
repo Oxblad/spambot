@@ -644,11 +644,11 @@ def handle_message_received(message):
     elif let == 1:
 
         print('Start')
+        i = 0
+        lenn = len(text)
+        while i < lenn:
+            a = listing[i]
         def is_int(str):
-            i = 0
-            lenn = len(text)
-            while i < lenn:
-                a = listing[i]
                 try:
                     int(str)
                     return True
