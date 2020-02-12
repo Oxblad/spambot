@@ -653,7 +653,8 @@ def handle_message_received(message):
         lenn = len(text)
         while i < lenn:
             try:
-                numbers[listing[i]]
+
+                int(numbers[listing[i]])
                 print('ok')
                 i += 1
             except KeyError as e:
