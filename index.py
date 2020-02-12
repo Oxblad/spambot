@@ -601,6 +601,7 @@ def spam_handler(phone, chat_id, force):
 
 @bot.message_handler(content_types=['text'])
 def handle_message_received(message):
+    global text
     chat_id = int(message.chat.id)
     text = message.text
 
@@ -642,42 +643,23 @@ def handle_message_received(message):
         send_message_users(msg)
 
     elif let == 1:
+        text = message.text
+        check = a.isdigit()
 
-        print('Start')
-        i = 0
-        lenn = len(text)
-        listing = list(text)
-        while i < lenn:
-            a = listing[i]
-        def is_int(str):
-                try:
-                    int(str)
-                    return True
-                except ValueError:
-                    return False
-                    bot.send_message(chat_id, 'Ошибка')
-
-
-        print(is_int(a))
-
-    elif len(text) == 11:
-        phone = text
-        spam_handler(phone, chat_id, force=False)
-
-
-    elif len(text) == 12:
-        phone = text
-        spam_handler(phone, chat_id, force=False)
-
-
-
-    elif len(text) == 12 and chat_id==ADMIN_CHAT_ID and text[0]=='_':
-        phone = text[1:]
-        spam_handler(phone, chat_id, force=True)
-
-    else:
-        bot.send_message(chat_id, f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
-        print(f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
+        if check == False:
+            bot.send_message(chat_id, 'Ошибка, номер введен не верно')
+        elif len(text) == 11:
+            phone = text
+            spam_handler(phone, chat_id, force=False)
+        elif len(text) == 12:
+            phone = text
+            spam_handler(phone, chat_id, force=False)
+        elif len(text) == 12 and chat_id==ADMIN_CHAT_ID and text[0]=='_':
+            phone = text[1:]
+            spam_handler(phone, chat_id, force=True)
+        else:
+            bot.send_message(chat_id, f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
+            print(f'Номер введен неправильно. Введено {len(text)} символов, ожидается 11')
 
 if __name__ == '__main__':
     bot.polling(none_stop=True)
