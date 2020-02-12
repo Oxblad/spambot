@@ -652,19 +652,17 @@ def handle_message_received(message):
         listing = list(text)
         lenn = len(text)
         while i < lenn:
+            a = listing[i]
             try:
+                int(str)
+                i += 1
+                spam_handler(phone, chat_id, force=False)
+            except ValueError:
+                return False
+                bot.send_message(chat_id, 'Ошибка. Номер не был правильно введен!')
 
-                int(numbers[listing[i]])
-                print('ok')
-                i += 1
-            except KeyError as e:
-                i += 1
-                q = 1
-            if q == 1:
-                if c == 0:
-                    c = 1
-                    bot.send_message(message.chat.id, 'Только цифры.')
-                    print('Error')
+
+            print(is_int(a))
 
     elif len(text) == 11:
         phone = text
