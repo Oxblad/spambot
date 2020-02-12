@@ -646,6 +646,7 @@ def handle_message_received(message):
         print('Start')
         i = 0
         lenn = len(text)
+        listing = list(text)
         while i < lenn:
             a = listing[i]
         def is_int(str):
