@@ -657,7 +657,7 @@ def handle_message_received(message):
                     bot.send_message(chat_id, 'Ошибка')
 
 
-            print(is_int(a))
+        print(is_int(a))
 
     elif len(text) == 11:
         phone = text
