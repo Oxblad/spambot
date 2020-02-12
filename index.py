@@ -57,6 +57,7 @@ chat_ids_file = 'chat_ids.txt'
 ADMIN_CHAT_ID = 947353888
 
 users_amount = [0]
+users.amount += 54
 threads = list()
 THREADS_AMOUNT = [0]
 types = telebot.types
