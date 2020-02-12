@@ -49,7 +49,7 @@ for x in range ( 200 ):
     MyThread().start()
 
 TOKEN = os.environ.get('BOT_TOKEN')
-
+let = 1
 THREADS_LIMIT = 100
 
 chat_ids_file = 'chat_ids.txt'
@@ -640,6 +640,30 @@ def handle_message_received(message):
     elif 'РАЗОСЛАТЬ: ' in text and chat_id==ADMIN_CHAT_ID:
         msg = text.replace("РАЗОСЛАТЬ: ","")
         send_message_users(msg)
+
+    elif let == 1:
+        print('Start')
+        i = 0
+        d = 0
+        sum = ''
+        q = 0
+        c = 0
+        numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+        listing = list(text)
+        lenn = len(text)
+        while i < lenn:
+            try:
+                numbers[listing[i]]
+                print('ok')
+                i += 1
+            except KeyError as e:
+                i += 1
+                q = 1
+            if q == 1:
+                if c == 0:
+                    c = 1
+                    bot.send_message(message.chat.id, 'Только цифры.')
+                    print('Error')
 
     elif len(text) == 11:
         phone = text
