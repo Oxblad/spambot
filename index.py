@@ -644,7 +644,7 @@ def handle_message_received(message):
 
     elif let == 1:
         text = message.text
-        check = a.isdigit()
+        check = text.isdigit()
 
         if check == False:
             bot.send_message(chat_id, 'Ошибка, номер введен не верно')
