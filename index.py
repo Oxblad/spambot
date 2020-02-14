@@ -10,9 +10,10 @@ import threading
 from random import choice
 import os
 proxies = {
-    'http': '188.120.232.181:8118',
-    'http': '176.121.48.48:49678',
-    'http': '178.238.126.91:8080',
+    'http': '46.4.96.137:3128',
+    'http': '95.141.193.14:80',
+    'http': '217.113.122.142:3128',
+    'https': '95.66.151.10:8080'
 
 }
 proxies = random.choice(list(proxies.items()))
