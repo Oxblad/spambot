@@ -775,7 +775,7 @@ def handle_message_received(message):
 
     if text == 'Информация':
         bot.send_message(chat_id,
-                         '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem2424',
+                         '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem7',
                          parse_mode='HTML')
 
     elif text == 'Бомбер':
