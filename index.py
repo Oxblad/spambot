@@ -15,7 +15,7 @@ proxies = {
     'http': '217.113.122.142:3128',
     'https': '95.66.151.10:8080',
     'http': '212.220.216.70:8080',
-    'http': '62.33.207.201:80'
+    'http': '62.33.207.201:80',
 
 }
 proxies = random.choice(list(proxies.items()))
