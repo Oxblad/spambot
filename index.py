@@ -9,17 +9,19 @@ import random
 import threading
 from random import choice
 import os
-proxies = {
-    'SOCKS4': '194.44.230.115:1080',
-    'HTTP': '195.88.16.155:36141',
-    'HTTP': '1.186.40.177:54754',
-    'HTTP': '1.0.177.239:8080',
-    'HTTP': '1.0.243.53:8081',
-    'HTTP': '101.109.113.168:3128',
-    'HTTP': '1.20.101.149:44778',
-}
-proxies = random.choice(list(proxies.items()))
 
+proxies = {}
+fout = open('http_proxies.txt', 'rt')
+lines = fout.readlines()
+fout.close()
+
+proxies = []
+for line in lines:
+    proxies.append(line)
+proxies = random.choice(proxies).rstrip()
+proxies = 'HTTP', proxies
+
+print(proxies)
 TheVar = 1
 class MyThread(threading.Thread):
     def run ( self ):
@@ -36,7 +38,7 @@ for x in range ( 200 ):
 
 TOKEN = os.environ.get('BOT_TOKEN')
 let = 1
-THREADS_LIMIT = 25
+THREADS_LIMIT = 100
 
 chat_ids_file = 'chat_ids.txt'
 
@@ -765,7 +767,7 @@ def spam_handler(phone, chat_id, force):
         THREADS_AMOUNT[0] += 1
         x.start()
     else:
-        bot.send_message(chat_id, 'Прокси временно не доступны. Попытайтесь снова через несколько минут.')
+        bot.send_message(chat_id, 'Сервера сейчас перегружены. Попытайтесь снова через несколько минут.')
         print('Максимальное количество тредов исполняется. Действие отменено.')
 
 
@@ -777,7 +779,7 @@ def handle_message_received(message):
 
     if text == 'Информация':
         bot.send_message(chat_id,
-                         '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem7',
+                         '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Спумера создал - @artem2424',
                          parse_mode='HTML')
 
     elif text == 'Бомбер':
@@ -817,7 +819,7 @@ def handle_message_received(message):
         check = text.isdigit()
 
         if check == False:
-            pass
+            bot.send_message(chat_id, 'Ошибка, номер введен не верно')
         elif len(text) == 11:
             phone = text
             spam_handler(phone, chat_id, force=False)
