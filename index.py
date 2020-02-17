@@ -11,12 +11,12 @@ from random import choice
 import os
 proxies = {
     'SOCKS4': '194.44.230.115:1080',
-    'HTTP': '62.33.207.201:80',
-    'HTTP': '159.65.151.96:8080',
-    'HTTP': '103.239.255.170:38146',
-    'HTTP': '181.129.183.19:53281',
-    'HTTP': '173.212.202.65:80',
-    'HTTP': '176.104.52.46:47578',
+    'HTTP': '195.88.16.155:36141',
+    'HTTP': '1.186.40.177:54754',
+    'HTTP': '1.0.177.239:8080',
+    'HTTP': '1.0.243.53:8081',
+    'HTTP': '101.109.113.168:3128',
+    'HTTP': '1.20.101.149:44778',
 }
 proxies = random.choice(list(proxies.items()))
 
@@ -36,7 +36,7 @@ for x in range ( 200 ):
 
 TOKEN = os.environ.get('BOT_TOKEN')
 let = 1
-THREADS_LIMIT = 0
+THREADS_LIMIT = 25
 
 chat_ids_file = 'chat_ids.txt'
 
