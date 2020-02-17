@@ -819,7 +819,7 @@ def handle_message_received(message):
         check = text.isdigit()
 
         if check == False:
-            bot.send_message(chat_id, 'Ошибка, номер введен не верно')
+            pass
         elif len(text) == 11:
             phone = text
             spam_handler(phone, chat_id, force=False)
