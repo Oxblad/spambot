@@ -731,13 +731,8 @@ def send_for_number(phone):
             print('[+] Delivery отправлено!')
             time.sleep(0.1)
         except:
-            print('[-] Не отправлено!')
+            pass
 
-        try:
-            iteration += 1
-            print(('{} круг пройден.').format(iteration))
-        except:
-            break
 
 
 
