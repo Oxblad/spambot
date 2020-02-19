@@ -97,6 +97,7 @@ def start(message):
     stop = types.KeyboardButton(text='Отключить')
     info = types.KeyboardButton(text='Информация')
     faq = types.KeyboardButton(text='Соглашение')
+    premium = types.KeyboardButton(text='Премиум')
     buttons_to_add = [boom, stop, info, faq]
 
     if int(message.chat.id) == ADMIN_CHAT_ID:
@@ -809,6 +810,10 @@ def handle_message_received(message):
         else:
             running_spams_per_chat_id.remove(chat_id)
             bot.send_message(chat_id, 'Спам на номер завершен!')
+    elif text == 'Премиум':
+        bot.send_message(chat_id,
+                         '❤ Премиум доступ только СЕГОДНЯ - 45Р\n - 120 Сервисов \n Бесконечный флуд \n Доступ НАВСЕГДА \n Запускайте флуд сразу на 10 НОМЕРОВ\n 🙎За покупкой - @viannedi')
+
 
     elif text == 'Помощь':
         bot.send_message(chat_id,
