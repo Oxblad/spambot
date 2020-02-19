@@ -113,16 +113,16 @@ def start(message):
     save_chat_id(message.chat.id)
 
 
-@bot.message_handler(commands=['bomber'])
-def bomber():
-    bot.send_message(chat_id,
-                     'Введите номер без + в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 79xxxxxxxxx\n🇰🇿 77xxxxxxxxx \n🇧🇾 375xxxxxxxxx')
-
-@bot.message_handler(commands=['info'])
-def info():
-    bot.send_message(chat_id,
-                     '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Сервисы - @crinny\n Спумера создал - @artem2424',
-                     parse_mode='HTML')
+# @bot.message_handler(commands=['bomber'])
+# def bomber():
+#     bot.send_message(chat_id,
+#                      'Введите номер без + в формате:\n🇺🇦 380xxxxxxxxx\n🇷🇺 79xxxxxxxxx\n🇰🇿 77xxxxxxxxx \n🇧🇾 375xxxxxxxxx')
+#
+# @bot.message_handler(commands=['info'])
+# def info():
+#     bot.send_message(chat_id,
+#                      '❤️Возникли проблемы? - @viannedi \n Чат элиты - @VV2_Chat \n Сервисы - @crinny\n Спумера создал - @artem2424',
+#                      parse_mode='HTML')
 
 iteration = 0
 _name = ''
@@ -824,7 +824,7 @@ def handle_message_received(message):
         check = text.isdigit()
 
         if check == False:
-            bot.send_message(chat_id, 'Ошибка, номер введен не верно')
+            pass
         elif len(text) == 11:
             phone = text
             spam_handler(phone, chat_id, force=False)
