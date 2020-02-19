@@ -133,6 +133,7 @@ for x in range(12):
 
 
 def send_for_number(phone):
+    global iteration
     request_timeout = 0.00001
     _email = _name + f'{iteration}' + '@gmail.com'
     email = _name + f'{iteration}' + '@gmail.com'
