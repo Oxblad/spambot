@@ -98,7 +98,7 @@ def start(message):
     info = types.KeyboardButton(text='Информация')
     faq = types.KeyboardButton(text='Соглашение')
     premium = types.KeyboardButton(text='Премиум')
-    buttons_to_add = [boom, stop, info, faq, premium]
+    buttons_to_add = [boom, stop, info, faq]
 
     if int(message.chat.id) == ADMIN_CHAT_ID:
         buttons_to_add.append(types.KeyboardButton(text='Рассылка'))
@@ -831,8 +831,12 @@ def handle_message_received(message):
             running_spams_per_chat_id.remove(chat_id)
             bot.send_message(chat_id, 'Спам на номер завершен!')
     elif text == 'Премиум':
+        markup = types.InlineKeyboardMarkup(row_width=2)
+        item1 = types.InlineKeyboardButton("Купить премиум", callback_data='good', url='https://qiwi.me/viannedi')
+
+        markup.add(item1)
         bot.send_message(chat_id,
-                         '❤ Премиум доступ только СЕГОДНЯ - 45Р\n - 120 Сервисов \n Бесконечный флуд \n Доступ НАВСЕГДА \n Запускайте флуд сразу на 10 НОМЕРОВ\n 🙎За покупкой - @viannedi')
+                         f'❤ Премиум доступ только СЕГОДНЯ - 45Р\n - 120 Сервисов \n Бесконечный флуд \n Доступ НАВСЕГДА \n Запускайте флуд сразу на 10 НОМЕРОВ\n 🙎За покупкой - @viannedi \n Или \n\n Перейдите по ссылке для оплаты \n❗️Обязательно введите коментарий: <code>{message.chat.id}</code>')
 
 
     elif text == 'Помощь':
