@@ -98,7 +98,7 @@ def start(message):
     info = types.KeyboardButton(text='Информация')
     faq = types.KeyboardButton(text='Соглашение')
     premium = types.KeyboardButton(text='Премиум')
-    buttons_to_add = [boom, stop, info, faq]
+    buttons_to_add = [boom, stop, info, faq, premium]
 
     if int(message.chat.id) == ADMIN_CHAT_ID:
         buttons_to_add.append(types.KeyboardButton(text='Рассылка'))
