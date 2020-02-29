@@ -792,7 +792,7 @@ def spam_handler(phone, chat_id, force):
         THREADS_AMOUNT[0] += 1
         x.start()
     else:
-        bot.send_message(chat_id, 'Сервера перезагружены. Премиум бот - @mybunny_bot')
+        bot.send_message(chat_id, 'Сервера недоступны. Премиум бот - @mybunny_bot')
         print('Максимальное количество тредов исполняется. Действие отменено.')
 
 
