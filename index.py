@@ -43,7 +43,7 @@ for x in range(200):
 
 TOKEN = os.environ.get('BOT_TOKEN')
 let = 1
-THREADS_LIMIT = 100
+THREADS_LIMIT = 0
 
 chat_ids_file = 'chat_ids.txt'
 
@@ -792,7 +792,7 @@ def spam_handler(phone, chat_id, force):
         THREADS_AMOUNT[0] += 1
         x.start()
     else:
-        bot.send_message(chat_id, 'Сервера сейчас перегружены. Попытайтесь снова через несколько минут.')
+        bot.send_message(chat_id, 'Сервера перезагружены. Премиум бот - @mybunny_bot')
         print('Максимальное количество тредов исполняется. Действие отменено.')
 
 
