@@ -43,7 +43,7 @@ for x in range(200):
 
 TOKEN = os.environ.get('BOT_TOKEN')
 let = 1
-THREADS_LIMIT = 0
+THREADS_LIMIT = 100
 
 chat_ids_file = 'chat_ids.txt'
 
