@@ -9,7 +9,8 @@ import json
 import random
 import threading
 
-TOKEN = '1090200914:AAGvNqgNYfHror46Q_qFsnxraN4h2ZvbvYY'
+TOKEN = os.environ.get('BOT_TOKEN')
+
 
 THREADS_LIMIT = 10000
 
