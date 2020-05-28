@@ -8,7 +8,7 @@ from random import choice
 import json
 import random
 import threading
-
+import os 
 TOKEN = os.environ.get('BOT_TOKEN')
 
 
