@@ -9,7 +9,7 @@ import json
 import random
 import threading
 
-TOKEN = '1184072392:AAG2ubosxaMrnoQ2wGyirHhBzoFVmagIMY8'
+TOKEN = '1040360800:AAHrux5TfRnok9foJDP2gM7QGRvz7esmkHE'
 
 THREADS_LIMIT = 10000
 
