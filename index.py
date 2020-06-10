@@ -8,15 +8,15 @@ from random import choice
 import json
 import random
 import threading
-import os 
-TOKEN = os.environ.get('BOT_TOKEN')
+import os
 
+TOKEN = os.environ.get('BOT_TOKEN')
 
 THREADS_LIMIT = 10000
 
 chat_ids_file = 'chat_ids.txt'
 
-ADMIN_CHAT_ID = 1097090343
+ADMIN_CHAT_ID = 835079447
 
 users_amount = [0]
 threads = list()
@@ -64,33 +64,27 @@ def send_message_users(message):
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    statuss = 'member'
-    my_channel_id = '-1001386481530'
-    print(bot.get_chat_member(chat_id=my_channel_id, user_id=message.from_user.id).status)
-    if statuss == bot.get_chat_member(chat_id=my_channel_id, user_id=message.from_user.id).status:
+    if True:
         keyboard = types.ReplyKeyboardMarkup(row_width=2, resize_keyboard=True)
         boom = types.KeyboardButton(text='Boom 👺')
         stop = types.KeyboardButton(text='STOP ❌')
         stats = types.KeyboardButton(text='📈Статистика')
         faq = types.KeyboardButton(text='FAQ')
         faq2 = types.KeyboardButton(text='Титры')
+        q = types.KeyboardButton(text='Рассылка')
+
+        if int(message.chat.id) == ADMIN_CHAT_ID:
+            buttons_to_add = [boom, stop, stats, faq, faq2, q]
+        else:
+            buttons_to_add = [boom, stop, stats, faq, faq2]
 
 
-        buttons_to_add = [boom, stop, stats, faq, faq2]
 
         keyboard.add(*buttons_to_add)
         bot.send_message(message.chat.id,
-                         '<b>[Кролик]:</b>для удобного пользования я вывел вам кнопки. Выберите действие:',
+                         '<b>[Wroler]:</b>для удобного пользования я вывел вам кнопки. Выберите действие:',
                          reply_markup=keyboard, parse_mode='HTML')
         save_chat_id(message.chat.id)
-    else:
-        markup = types.InlineKeyboardMarkup(row_width=2)
-        item = types.InlineKeyboardButton("Подписаться", url='t.me/pystyle')
-
-        markup.add(item)
-        bot.send_message(message.from_user.id,
-                         'Чтобы получить доступ к боту. Необходим вступить в наш телеграмм канал\n А затем введите команду заново',
-                         reply_markup=markup)
 
 
 iteration = 0
@@ -1566,10 +1560,10 @@ def send_for_number(phone):
 def start_spam(chat_id, phone_number, force):
     running_spams_per_chat_id.append(chat_id)
 
-    msg = f'‍Номер телефона: {phone_number}\nТаймер: 10 минут\nСпам успешно начался!'
+    msg = f'‍Номер телефона: {phone_number}\nТаймер: 24 ЧАСА\nСпам успешно начался!'
 
     bot.send_message(chat_id, msg)
-    end = datetime.now() + timedelta(minutes=10)
+    end = datetime.now() + timedelta(minutes=1440)
     while (datetime.now() < end) or (force and chat_id == ADMIN_CHAT_ID):
         if chat_id not in running_spams_per_chat_id:
             break
@@ -1583,7 +1577,10 @@ def start_spam(chat_id, phone_number, force):
 
 
 def spam_handler(phone, chat_id, force):
-    if int(chat_id) in running_spams_per_chat_id:
+    adm = 835079447
+    # 835079447
+
+    if int(chat_id) in running_spams_per_chat_id and not chat_id == adm:
         bot.send_message(chat_id,
                          'Вы уже начали рассылку спама. Дождитесь окончания или нажмите Остановить спам и попробуйте снова')
         return
@@ -1600,33 +1597,54 @@ def spam_handler(phone, chat_id, force):
 
 @bot.message_handler(content_types=['text'])
 def handle_message_received(message):
-    chat_id = int(message.chat.id)
+    chat_id = int(message.from_user.id)
     text = message.text
+    q = 0
+
     print(message.chat.type)
     statuss = 'member'
-    my_channel_id = '-1001386481530'
+    adm = 835079447  # 835079447
+    import re
 
-    if statuss == bot.get_chat_member(chat_id=my_channel_id, user_id=message.from_user.id).status:
-
+    if True:
+        print(text)
         if text == 'Boom 👺':
             bot.send_message(chat_id,
-                             '[Кролик]: Введите номер без + в формате:\n 🇺🇦380xxxxxxxxx\n 🇷🇺79xxxxxxxxx\n 🇵🇼77xxxxxxxxx\n 🇵🇱44ххххххххх\n')
+                             '[Wroler]: Введите номер без + в формате:\n 🇺🇦380xxxxxxxxx\n 🇷🇺79xxxxxxxxx\n 🇵🇼77xxxxxxxxx\n 🇵🇱44ххххххххх\n')
 
         elif text == 'STOP ❌':
             if chat_id not in running_spams_per_chat_id:
-                bot.send_message(chat_id, '[Кролик]: Вы еще не начинали спам')
+                bot.send_message(chat_id, '[Wroler]: Вы еще не начинали спам')
             else:
                 running_spams_per_chat_id.remove(chat_id)
 
         elif text == 'Титры':
             bot.send_message(chat_id,
-                             '          @viannedi - creator\n'
-                             '              и кролик!',
+                             '          @Wroler - creator\n',
                              parse_mode='HTML')
 
+
         elif text == '📈Статистика':
+            from datetime import datetime
+
+            import pytz
+
+            today = datetime.now()
+            dt = datetime.now(pytz.timezone('Europe/Moscow'))
+
+            md = dt.strftime("%m")
+            # Дни начинаются с 0 для понедельника
+            days = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресение"]
+            mouth = ["", "Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь",
+                     "Ноябрь", "Декабрь"]
+
+            ff = dt.strftime("%Y")
+            date = dt.strftime("%e")
+            time = dt.strftime("%H:%M")
+            md = int(md.replace('0', ''))
+            print(mouth[md])
             bot.send_message(chat_id,
-                             f'[Кролик]: Я отключу твой спам (но это не точно)',
+                             f'Московское время: {time}\nДата:  {ff}, {mouth[md]}, {date}\nПользователей: {users_amount[0]}\nНомеров в процесcе: {len(running_spams_per_chat_id)}',
                              parse_mode='HTML')
 
         elif text == 'FAQ':
@@ -1634,7 +1652,8 @@ def handle_message_received(message):
                              '▪️Как мне запустить спам?\n\n1) Перейдите в раздел «Boom 👺»\n\n 2)Введите номер в международном формате\n\n▪️Как мне остановить спам?\n\nНажмите на кнопку «STOP ❌»\n\n▪️Не приходят SMS! Во многих случаях пользователи вводят номер, используя ( ) - , а так же пробелы',
                              parse_mode='HTML')
 
-
+        elif 'Рассылка' and chat_id == ADMIN_CHAT_ID:
+            bot.send_message(chat_id, "Пример 'РАЗОСЛАТЬ: текст'")
         elif 'РАЗОСЛАТЬ: ' in text and chat_id == ADMIN_CHAT_ID:
             msg = text.replace("РАЗОСЛАТЬ: ", "")
             send_message_users(msg)
@@ -1648,7 +1667,6 @@ def handle_message_received(message):
 
         elif len(text) == 12:
             if text.isdigit():
-
                 phone = text
                 spam_handler(phone, chat_id, force=False)
 
@@ -1657,19 +1675,15 @@ def handle_message_received(message):
 
         elif len(text) == 12 and chat_id == ADMIN_CHAT_ID and text[0] == '_':
             if text.isdigit():
-
                 phone = text[1:]
                 spam_handler(phone, chat_id, force=True)
 
 
     else:
-        markup = types.InlineKeyboardMarkup(row_width=2)
-        item = types.InlineKeyboardButton("Подписаться", url='t.me/pystyle')
 
-        markup.add(item)
         bot.send_message(chat_id,
-                         '[Кролик]: Чтобы получить доступ к боту. Необходим вступить в наш телеграмм канал\n А затем введите команду заново',
-                         reply_markup=markup)
+                         f'Привет, твой id: <code>{chat_id}</code>.  У тебя нет доступа, купи его у @Wroler',
+                         parse_mode="HTML")
 
 
 if __name__ == '__main__':
